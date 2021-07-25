@@ -1,0 +1,418 @@
+<!DOCTYPE html> <!-- Loads the latest version of HTML (Currently HTML5) -->
+<html>
+
+<head>
+	<title>Registration From</title>
+	
+	<meta name="description" content "This is the webpage to register"/>
+	<meta http-uquiv = "author" content "Michael Morris"/>
+	<meta http-uquiv = "content-language" content "en-ZA"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	
+	
+	<link 
+	rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+	
+	
+	
+	<style>
+		::placeholder{color:grey;opacity:0.3;} 
+		label {display:inline-block; width:150px;}
+		input {width:250px;}		
+		option {color:black;background:white;}		
+		container {max-width:100%;max-height:100%;}
+		button {background-color:#2885c2;}
+		<!--outline:red auto 5px;-->
+
+	</style>
+	
+	<style>
+		modal 
+		{
+			position:absolute;
+			height: 800px;
+			max-width: 650px;
+			background-color: rgba(0,0,0,0.7);
+			display:flex;
+			justify-content: center;
+			align-items: center;
+		}
+		modal-content
+		{
+			width: 500px;
+			height: 750px;
+			border-radius: 4px;
+			opacity:0.7;
+		}
+	
+	</style>
+
+</head>
+
+<body onload="PagesSetup1();">
+
+<div class="container">
+<div class="row">
+<div class="col-lg-6 col-md-8 col-sm-12">
+
+<div class="modal" id= "mod">
+	<div class="modal-content">
+		<form action="";>
+			<div class="modal-header">
+				<p>By clicking "Complete Registration" you acknowledge that you read and accept our <a href="https://www.avantedge.co.za/privacy-policy/">Privacy Policy</a>. Your information will be used in the manner set out in our <a href="https://www.avantedge.co.za/privacy-policy/">Privacy Policy</a> and in compliance with the <a href="https://popia.co.za/">Protection of Personal Information Act</a>.<br></br>
+By clicking "Complete Registration" you acknowledge the correctness of your personal information below.<br></br>
+Click "Cancel" to opt out.</p>
+			</div>
+			<div class="modal-body">
+				<input type = "text" id="Result_FName">
+				<input type = "text" id="Result_LName">
+				<input type = "text" id="Result_EMail">
+				<input type = "text" id="Result_IDNum">
+				<input type = "text" id="Result_Dob">
+				<input type = "text" id="Result_WNum">
+				<input type = "text" id="Result_CNum">
+			</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" onclick = "can();ClearFields()" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" onclick = "RegComp();ClearFields()">Complete Registration</button>
+				</div>			
+		</form>
+    </div>	
+</div>
+
+	<h3> Online Registration </h3>
+
+	<!--<form action="" method="">-->
+
+	<label for="FirstName">First Name</label>
+	<input type="text" id="FirstName"  placeholder="First Name"> <br></br>
+
+	
+	<label for="LastName">Last Name</label>
+	<input type = "text" id="LastName" placeholder="Last Name"> <br></br>
+
+	<label for="EmailAddress">Email Address</label>
+	<input type = "text" id="EmailAddress" placeholder="Email Address"> <br></br>
+
+	<label for="IDNumber">ID Number</label>
+	<input type = "text" id="IDNumber" placeholder="ID Number"> <br></br>
+
+	<label for ="Month">Date of Birth</label>
+	
+	<select class="btn-primary" placeholer="Month" Id = "Month" onchange="CheckFeb()">
+		<option value="January">January</option>
+		<option value="February">February</option>
+		<option value="March">March</option>
+		<option value="April">April</option>
+		<option value="May">May</option>
+		<option value="June">June</option>
+		<option value="July">July</option>
+		<option value="August">August</option>
+		<option value="September">September</option>
+		<option value="October">October</option>
+		<option value="November">November</option>
+		<option value="December">December</option>
+	</select>
+	
+	<select class="btn-primary" placeholder="Day" Id="Day">	</select>
+	<select class="btn-primary" placeholder="Year" id="Year" onchange="CheckFeb()">	</select>
+	<br></br>
+
+	<label for="WorkPhone">Work Phone</label>
+	<input type = "text" id="WorkPhone" placeholder="Work Phone"> 
+	<br></br>
+
+	<label for="CellPhone">Cell Phone</label>
+	<input type = "text" id="CellPhone" placeholder="Cell Phone"> <br></br>
+
+	<button type="Submit" onclick="RegistrationCheck()" Class="btn-primary btn-md8" >Register</button>
+	<button type="Submit" onclick="ClearFields()" Class="btn-primary btn-md8">Clear</button>
+
+</div>
+</div>
+</div>
+
+
+<script>
+	function PagesSetup1()
+	{
+		let d = new Date();
+		const e = d.getFullYear();		
+		let select1 = document.getElementById('Year')
+		let select2 = document.getElementById('Day')
+		
+		for (let s = 2010; s <= e; s++)
+		{
+		
+			let opt = document.createElement("option");
+			opt.val = s - 2009;
+			opt.text = s
+			select1.add(opt,null)
+			
+		}
+		
+		for (let s = 1; s <= 31; s++)
+		{
+		
+			let opt = document.createElement("option");
+			opt.val = s - 1;
+			opt.text = s
+			select2.add(opt,null)
+			
+		}
+	}
+</script>
+
+<script>
+	function CheckFeb()
+	{
+		
+		let sel = document.getElementById('Month');		
+		let ind = document.getElementById('Month').selectedIndex;
+		let txt = sel.options[ind].text
+		
+		const Month31 = ["January","March","May","July","August","October","December"];		
+		const Month30 = ["April","June","September","November"];
+		
+		const Yr = document.getElementById('Year').selectedIndex
+			
+		const selD = document.getElementById('Day');		
+		$("#Day").empty();			
+		
+		let DaysToAdd = 0
+		
+		if (Month31.includes(txt))
+		{DaysToAdd = 31}
+		
+		if (Month30.includes(txt))
+		{DaysToAdd = 30}
+		
+		if (txt == "February")
+		{				
+			if( ((Yr % 4 == 0) && (Yr % 100 != 0)) || (Yr % 400 == 0) )
+				{DaysToAdd = 29} 
+			else
+				{DaysToAdd = 28} 
+			
+		}
+		
+		for (let s = 0; s <= DaysToAdd-1; s++)
+		{				
+			let opt = document.createElement('option');
+			opt.val = s;
+			opt.text = s+1;
+			selD.add(opt,null);
+		}
+	
+	}
+</script>
+
+	
+<script>
+	function ClearFields()
+	{
+		document.getElementById('FirstName').value = "";
+		document.getElementById('LastName').value = "";
+		document.getElementById('EmailAddress').value = "";
+		document.getElementById('IDNumber').value = "";
+		document.getElementById('WorkPhone').value = "";
+		document.getElementById('CellPhone').value = "";
+		
+		let element = document.getElementById('Year');
+		document.getElementById('Year').selectedIndex = "0";
+		element.dispatchEvent(new Event("change")); 
+		document.getElementById('Month').value = 'January'
+		document.getElementById('Day').value = 1
+		<!-- FirstName.val(""); -->
+	}
+</script>
+
+<script>
+	function RegistrationCheck()
+	{
+
+		let count = 0
+		let StringCount = ""
+		let mail = document.getElementById('EmailAddress').value
+		let IDNum = document.getElementById('IDNumber').value
+		let WorkNum = document.getElementById('WorkPhone').value
+		let CellNum = document.getElementById('CellPhone').value
+		
+		let Mailformat = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/
+		let IDformat = /^\d{13}$/
+		let Teleformat = /^\d{10}$/
+		
+		let DobYear = document.getElementById('Year').value
+		let DobMonth = document.getElementById('Month').value					
+		let DobDay = document.getElementById('Day').value
+				
+		DobYear = (DobYear === undefined) ? "2010" : DobYear;
+		DobDay = (DobDay === undefined) ? "1" : DobDay;
+		DobMonth = (DobMonth === undefined) ? "January" : DobMonth;
+		
+		let x = document.querySelectorAll("#FirstName");
+				 x[0].style.outline = "black auto 5px";
+		let y = document.querySelectorAll("#LastName");
+				 y[0].style.outline = "black auto 5px";				 
+		let Z = document.querySelectorAll("#EmailAddress");
+				 Z[0].style.outline = "black auto 5px";	
+		let I = document.querySelectorAll("#IDNumber");
+				 I[0].style.outline = "black auto 5px";	
+		let J = document.querySelectorAll("#WorkPhone");
+				 J[0].style.outline = "black auto 5px";	
+		let K = document.querySelectorAll("#CellPhone");
+				 K[0].style.outline = "black auto 5px";	
+		
+		let tmpDob =(DobDay + " " + DobMonth + " " + DobYear)		
+	
+		if(document.getElementById('FirstName').value == "" ||
+		   document.getElementById('LastName').value == "" ||
+		   document.getElementById('EmailAddress').value == "" ||
+		   document.getElementById('IDNumber').value == "" ||
+		   document.getElementById('WorkPhone').value == "" ||
+		   document.getElementById('CellPhone').value == "")
+		   
+		{
+			count++;
+			StringCount = count.toString();			
+			alert(StringCount + ": Not all fileds have been completed.");
+			
+			if(document.getElementById('FirstName').value == "")
+			{
+				 let x = document.querySelectorAll("#FirstName");
+				 x[0].style.outline = "red auto 5px";
+			}
+			
+			if(document.getElementById('LastName').value == "")
+			{
+				 let x = document.querySelectorAll("#LastName");
+				 x[0].style.outline = "red auto 5px";
+			}
+			
+			if(document.getElementById('EmailAddress').value == "")
+			{
+				 let x = document.querySelectorAll("#EmailAddress");
+				 x[0].style.outline = "red auto 5px";
+			}
+			
+			if(document.getElementById('IDNumber').value == "")
+			{
+				 let x = document.querySelectorAll("#IDNumber");
+				 x[0].style.outline = "red auto 5px";
+			}
+			
+			if(document.getElementById('WorkPhone').value == "")
+			{
+				 let x = document.querySelectorAll("#WorkPhone");
+				 x[0].style.outline = "red auto 5px";
+			}
+			
+			if(document.getElementById('CellPhone').value == "")
+			{
+				 let x = document.querySelectorAll("#CellPhone");
+				 x[0].style.outline = "red auto 5px";
+			}
+		   
+		}
+		
+		if(Mailformat.test(mail))
+		{}					
+		else if(mail.toString() != "")
+		{
+			count++;
+			StringCount = count.toString();	
+			alert(StringCount + ": Invalid email address found");	
+
+			let x = document.querySelectorAll("#EmailAddress");
+			x[0].style.outline = "red auto 5px";
+		}
+		
+		if(IDformat.test(IDNum))
+		{}					
+		else if(IDNum.toString() != "")	
+		{
+			count++;
+			StringCount = count.toString();	
+			alert(StringCount + ": Invalid ID Number found");
+			
+			let x = document.querySelectorAll("#IDNumber");
+			x[0].style.outline = "red auto 5px";
+		}
+		
+		if(Teleformat.test(WorkNum))
+		{}					
+		else if(WorkNum.toString() != "")		
+		{
+			count++;
+			StringCount = count.toString();	
+			alert(StringCount + ": Invalid Work Number found");
+			
+			let x = document.querySelectorAll("#WorkPhone");
+			x[0].style.outline = "red auto 5px";			
+		}
+		
+		if(Teleformat.test(CellNum))
+		{}					
+		else if(CellNum.toString() != "")	
+		{
+			count++;
+			StringCount = count.toString();	
+			alert(StringCount + ": Invalid Cell Number found");		
+			
+			let x = document.querySelectorAll("#CellPhone");
+			x[0].style.outline = "red auto 5px";
+		}
+				
+		if(count == 0)
+		{	
+			document.getElementById('Result_FName').value = document.getElementById('FirstName').value
+			document.getElementById('Result_LName').value = document.getElementById('LastName').value
+			document.getElementById('Result_EMail').value = document.getElementById('EmailAddress').value			
+			document.getElementById('Result_IDNum').value = document.getElementById('IDNumber').value			
+			document.getElementById('Result_WNum').value = document.getElementById('WorkPhone').value
+			document.getElementById('Result_CNum').value = document.getElementById('CellPhone').value
+			document.getElementById('Result_Dob').value = tmpDob
+			
+			document.getElementById('mod').style.display="flex";
+		}
+	}
+</script>
+
+<script>
+	function can()
+	{
+		document.getElementById('mod').style.display="none";
+	}
+</script>
+
+<script>
+	function RegComp()
+	{
+		alert("Thank you for registering");
+		document.getElementById('mod').style.display="none";
+	}
+</script>		
+
+	<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js";
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM";
+	crossorigin="anonymous"></script>
+
+	<script 
+	src="https://code.jquery.com/jquery-3.3.1.slim.min.js"; 
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo";
+	crossorigin="anonymous"></script>
+	
+	<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js";
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1";
+	crossorigin="anonymous"></script>
+	
+
+
+            
+</body>
+</html>
